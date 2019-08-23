@@ -13,11 +13,11 @@ We used data from World Bank and UNICEF's 'State of the World's Children' report
 - Urban population
 - Proportion of agricultural land
 - Adolescent birth rate
-- Improved sanitation
-- Immunization
-- Average support in learning from fathers
+- Improved sanitation (percent of the population with access to UNICEF's take on "improved sanitation")
+- Immunization (an average of different rates for different vaccines administered)
+- Average support in learning from fathers (the proportion of fathers that take an active role in their childrens' education -- reading to them, singing with them, playing with them, etc.)
 - Region
-- Income relative to other countries
+- Income relative to other countries (a categorical scale, according to World Bank)
 
 Unfortunately, the data on child employment rates, proportion of GDP spend on education, and average support in learning from fathers were not complete enough to use or accurately fill in missing values, so they had to be dropped from the data set. 
 
@@ -40,7 +40,7 @@ That was only one half of our journey for a deeper understanding of stats. The o
 Wow! Math is neat. 
 
 ## Final Conclusions
-The features with the biggest positive impact on primary school completion are 
+When 
 
 ## Next Steps
 In the future, we'd would explore further interaction terms, as well as try to reduce the bias seen in the residual plot by adjusting for the skew in primary school completion rates. We would also like to explore ways to fill in missing data for the variables we had to drop, such as father support. One possible way to do this is sklearn's multivariate imputation. 

@@ -26,6 +26,9 @@ Once we settled on the data we were using, we averaged values from 2000 to 2019 
 ## Exploratory Data Analysis
 The distribution of our target variable was left skewed and looked like:
 <p align='center'>
+  Distribution of Target Variable
+</p>
+<p align='center'>
 <img src='Images/target_distribution.png'>
 </p>
 We started by looking at a correlation matrix of each variable against primary school completion rates to see if there were any obvious variables to include in our model.
@@ -48,7 +51,10 @@ We delved into the country income data, thinking that maybe there was an interac
 
 ![Income and Urban Population Interaction](Images/Income_Urban_Interaction.png 'motivation for low income and urban interaction term')
 <p align='center'>
-<img src='Images/income_pie.png'>
+  Distribution of Income Groups
+</p>
+<p align='center'>
+  <img src='Images/income_pie.png'>
 </p>
 We created an interaction term with low income x average urban population to extract this relationship. We also hypothesized that the agricultural land and immunization rates may interact, and observed that, when included in our final model, that interaction had a p-value of .032, and therefore was indeed significant.
 

@@ -1,5 +1,5 @@
-# It's Elementary!: Modeling Global Primary School Completion Rates
-#### A linear regression model for primary completion rates
+# It's Elementary! : Modeling Global Primary School Completion Rates
+#### A Linear regression model for primary completion rates
 
 We were tasked with the challenge of selecting a topic to explore, finding data around that topic, and creating a linear regression model to predict some variable in the data. We focused on global education, deciding to attempt to model primary school completion rates. Education is, after all, the key to an individual's agency. With greater education comes a greater understanding of the world around you and a greater ability to try and solve the problems you see. Anyone can go into a foreign country and try and fix what they perceieve to be a problem, but by increasing the education level of citizens in that country, agency is placed in the hands of the people to improve what _they_ believe needs to be fixed. It was our hope that our model might shed light on what factors are important to primary school completion. 
 
@@ -24,17 +24,29 @@ Unfortunately, the data on child employment rates, proportion of GDP spend on ed
 Once we settled on the data we were using, we averaged values from 2000 to 2019 in our World Bank data, since UNICEF's data was an average of those years. Then, we took the  immunization rates in UNICEF's data (for polio vaccines, MMR, Hepetitis, etc.) and averaged those into one average immunization rate, since our domain knowledge was not extensive enough to understand the difference between each of these vaccines. Finally, we joined the World Bank and UNICEF data on country names, having to drop countries that weren't in both (there were not very many) and correct differences in names for the same country (such as "Bahamas, The" in World Bank data, versus just "Bahamas" in UNICEF data). 
 
 ## Exploratory Data Analysis
-We started by looking at scatter plots of each variable against primary school completion rates to see if there were any obvious variables to include in our model, and we looked at what the linear regression model would look like if we just put everything in there. Our r-squared value was .693, which wasn't too bad, but our p values for each feature were extremely variable. It was clear that this model was far too naive and we needed to dive into the nuances of the data. 
+We started by looking at a correlation matrix of each variable against primary school completion rates to see if there were any obvious variables to include in our model.
 
-Next, we looked at the effects of region, given the varying p values we saw for each region's effect on the model. After looking at joint plots for all of our variables, colored by region, we noticed that most countries' performance weren't being determined by the region they were in, except for those in Subsaharan Africa. When we examined the distribution of income in each region, we realized that a more reliable predictor of the patterns we were seeing was country income. So, in our next model we dropped the regional column. We saw a lower r-squared value, but the p values improved quite a bit, leading us to believe that we improved our model overall, but still needed more predictive power. There were definitely relationships waiting to be uncovered.
+![Correlation Matrix](Images/First_Correlation_Matrix.png 'correlation matrix')
 
-We delved into the country income data, thinking that maybe there was an interaction term at play. Looking at urban population and relative country income's higher p values, we figured they may have a greater relationship together than they do separately, and we tested that hypothesis using joint plots (shown below). As it turned out, the relationship between urban population and primary school completion was the only significant relationship (we used a confidence level of 95%; all other p values were greater than or equal to .05), and so we shifted our model's focus on income levels over all to 'low income' or 'not low income' and included an interaction term with that and urban population. 
+We started off with a linear regression model that included all of our variables. Our r-squared value was .693, which wasn't too bad, but our p-values for each feature were extremely variable. It was clear that this model was far too naive and we needed to dive into the nuances of the data.
 
-![joint plots for urban population & country income's influence on primary school completion](https://github.com/h-parker/primary_completion_rate/blob/master/Images/Income_Urban_Interaction.png)
+![Our First Model](Images/First_Naive_Model.png 'first model with all variable')
 
-We also hypothesized that the agricultural land and immunization rates may interact, and observed that, when included in our final model, that interaction had a p value of .032, and therefore was indeed significant. Our final model, along with the residual scatterplot, can be seen below.
+Next, we looked at the effects of region, given the varying p-values we saw for each region's effect on the model. After looking at joint plots for all of our variables, colored by region, we noticed that most countries' performance weren't being determined by the region they were in. When we examined the distribution of income in each region, we realized that a more reliable predictor of the patterns we were seeing was country income.
 
-![final linear model](https://github.com/h-parker/primary_completion_rate/blob/master/Images/Final_Model.png)
+![Income pairplot](Images/Income_Pairplot.png 'pairplot grouped by income')
+
+So, in our next model we dropped the regional column. We saw a lower r-squared value, but the p-values improved quite a bit, leading us to believe that we improved our model overall, but still needed more predictive power.
+
+![Second Model](Images/Second_Model.png 'second model without region')
+
+We delved into the country income data, thinking that maybe there was an interaction term at play. Looking at urban population and relative country income's higher p-values, we figured there may be an interaction there that can improve our p-values. As it turned out, the relationship between urban population and primary school completion was only significant when the income group was low income (we used a confidence level of 95%; all other p-values were greater than or equal to .05).
+
+![Income and Urban Population Interaction](Images/Income_Urban_Interaction.png 'motivation for low income and urban interaction term')
+
+We created an interaction term with low income x average urban population to extract this relationship. We also hypothesized that the agricultural land and immunization rates may interact, and observed that, when included in our final model, that interaction had a p-value of .032, and therefore was indeed significant.
+
+![Final Model](Images/Final_Model.png 'Final Model with interaction terms')
 
 We did it! We arrived at our final model, using urban population, agricultural land, adolescent birth rate, improved sanitation, immunization average, low income (categorical), low income x urban population, and agricultural land x immunization average as our independent variables. Unfortunately, though our residual plot tended to become less and less patterned as we refined our model, we still observed a somewhat substantial linear trend in our final residual plot. Though we tried transformations on the data that were skewed (primary school completion, for example, is right skewed, and so we used a log transformation to adjust for this), we were forced to accept that there were more complex transformations needed that we didn't have time to work out in our allotted 3 days, and so our residual plots were not as irregularly distributed as we would have hoped.
 

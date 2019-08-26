@@ -24,6 +24,10 @@ Unfortunately, the data on child employment rates, proportion of GDP spend on ed
 Once we settled on the data we were using, we averaged values from 2000 to 2019 in our World Bank data, since UNICEF's data was an average of those years. Then, we took the  immunization rates in UNICEF's data (for polio vaccines, MMR, Hepetitis, etc.) and averaged those into one average immunization rate, since our domain knowledge was not extensive enough to understand the difference between each of these vaccines. Finally, we joined the World Bank and UNICEF data on country names, having to drop countries that weren't in both (there were not very many) and correct differences in names for the same country (such as "Bahamas, The" in World Bank data, versus just "Bahamas" in UNICEF data). 
 
 ## Exploratory Data Analysis
+The distribution of our target variable was left skewed and looked like:
+<p align='center'>
+<img src='Images/target_distribution.png'>
+</p>
 We started by looking at a correlation matrix of each variable against primary school completion rates to see if there were any obvious variables to include in our model.
 
 ![Correlation Matrix](Images/First_Correlation_Matrix.png 'correlation matrix')
@@ -43,7 +47,9 @@ So, in our next model we dropped the regional column. We saw a lower r-squared v
 We delved into the country income data, thinking that maybe there was an interaction term at play. Looking at urban population and relative country income's higher p-values, we figured there may be an interaction there that can improve our p-values. As it turned out, the relationship between urban population and primary school completion was only significant when the income group was low income (we used a confidence level of 95%; all other p-values were greater than or equal to .05).
 
 ![Income and Urban Population Interaction](Images/Income_Urban_Interaction.png 'motivation for low income and urban interaction term')
-
+<p align='center'>
+<img src='Images/income_pie.png'>
+</p>
 We created an interaction term with low income x average urban population to extract this relationship. We also hypothesized that the agricultural land and immunization rates may interact, and observed that, when included in our final model, that interaction had a p-value of .032, and therefore was indeed significant.
 
 ![Final Model](Images/Final_Model.png 'Final Model with interaction terms')

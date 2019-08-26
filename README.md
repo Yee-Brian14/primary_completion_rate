@@ -1,5 +1,5 @@
 # It's Elementary!: Modeling Global Primary School Completion Rates
-#### A Linear regression model for primary completion rates
+#### A linear regression model for primary completion rates
 
 We were tasked with the challenge of selecting a topic to explore, finding data around that topic, and creating a linear regression model to predict some variable in the data. We focused on global education, deciding to attempt to model primary school completion rates. Education is, after all, the key to an individual's agency. With greater education comes a greater understanding of the world around you and a greater ability to try and solve the problems you see. Anyone can go into a foreign country and try and fix what they perceieve to be a problem, but by increasing the education level of citizens in that country, agency is placed in the hands of the people to improve what _they_ believe needs to be fixed. It was our hope that our model might shed light on what factors are important to primary school completion. 
 
@@ -28,7 +28,13 @@ We started by looking at scatter plots of each variable against primary school c
 
 Next, we looked at the effects of region, given the varying p values we saw for each region's effect on the model. After looking at joint plots for all of our variables, colored by region, we noticed that most countries' performance weren't being determined by the region they were in, except for those in Subsaharan Africa. When we examined the distribution of income in each region, we realized that a more reliable predictor of the patterns we were seeing was country income. So, in our next model we dropped the regional column. We saw a lower r-squared value, but the p values improved quite a bit, leading us to believe that we improved our model overall, but still needed more predictive power. There were definitely relationships waiting to be uncovered.
 
-We delved into the country income data, thinking that maybe there was an interaction term at play. Looking at urban population and relative country income's higher p values, we figured they may have a greater relationship together than they do separately, and we tested that hypothesis using joint plots. As it turned out, the relationship between urban population and primary school completion was the only significant relationship (we used a confidence level of 95%; all other p values were greater than or equal to .05), and so we shifted our model's focus on income levels over all to 'low income' or 'not low income' and included an interaction term with that and urban population. We also hypothesized that the agricultural land and immunization rates may interact, and observed that, when included in our final model, that interaction had a p value of .032, and therefore was indeed significant.
+We delved into the country income data, thinking that maybe there was an interaction term at play. Looking at urban population and relative country income's higher p values, we figured they may have a greater relationship together than they do separately, and we tested that hypothesis using joint plots (shown below). As it turned out, the relationship between urban population and primary school completion was the only significant relationship (we used a confidence level of 95%; all other p values were greater than or equal to .05), and so we shifted our model's focus on income levels over all to 'low income' or 'not low income' and included an interaction term with that and urban population. 
+
+![joint plots for urban population & country income's influence on primary school completion](https://github.com/h-parker/primary_completion_rate/blob/master/Images/Income_Urban_Interaction.png)
+
+We also hypothesized that the agricultural land and immunization rates may interact, and observed that, when included in our final model, that interaction had a p value of .032, and therefore was indeed significant. Our final model, along with the residual scatterplot, can be seen below.
+
+![final linear model](https://github.com/h-parker/primary_completion_rate/blob/master/Images/Final_Model.png)
 
 We did it! We arrived at our final model, using urban population, agricultural land, adolescent birth rate, improved sanitation, immunization average, low income (categorical), low income x urban population, and agricultural land x immunization average as our independent variables. Unfortunately, though our residual plot tended to become less and less patterned as we refined our model, we still observed a somewhat substantial linear trend in our final residual plot. Though we tried transformations on the data that were skewed (primary school completion, for example, is right skewed, and so we used a log transformation to adjust for this), we were forced to accept that there were more complex transformations needed that we didn't have time to work out in our allotted 3 days, and so our residual plots were not as irregularly distributed as we would have hoped.
 
@@ -40,7 +46,7 @@ That was only one half of our journey for a deeper understanding of stats. The o
 Wow! Math is neat. 
 
 ## Final Conclusions
-When 
+When we look at the coefficients of our final model (dependent variables were standardized so the coefficients would be directly comparable), we see that improved santitation, immunization rates, and having a larger proportion of agricultural land had the largest positive impact on primary school completion. On the other hand, being a low income country, having a high adolescent birth rate, and being both low income and having a high urban population all contribute the most negatively to primary school completion rate. 
 
 ## Next Steps
 In the future, we'd would explore further interaction terms, as well as try to reduce the bias seen in the residual plot by adjusting for the skew in primary school completion rates. We would also like to explore ways to fill in missing data for the variables we had to drop, such as father support. One possible way to do this is sklearn's multivariate imputation. 
